@@ -2,9 +2,10 @@
 
 I am a undergraduate student from University of Toronto. I major in Cells and system biology and statistics. Here is my first project
 
-#### Content
+####  Content
 The survey data was puuled from the pdf of National Contraceptive Prevalence Survey 1987 to analyze effect on the number of children that Indonesian women have based on different background characteristic. The background characteristic and understanding of at least one modern family planning mathod does not affect their number of children. This paper purposes to reject the bias of women who understand modern family planning methods will lead to less children birth. The future analyse is required to increase the number of survey in various years and locations.
 
+#### Repo Details
 Details in output/paper.pdf
 
 simulation dataset is 'scripts/00-simulation.R'
