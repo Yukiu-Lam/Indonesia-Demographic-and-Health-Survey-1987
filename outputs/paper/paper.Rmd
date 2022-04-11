@@ -1,0 +1,74 @@
+---
+title: "The background characteristic and understanding of modern family planning methods have no effect on their children number"
+author: 
+  - Yuqiao Lin
+thanks: "Code and data are available at: https://github.com/Yukiu-Lam/Indonesia-Demographic-and-Health-Survey-1987"
+date: "`r format(Sys.time(), '%d %B %Y')`"
+abstract: "The survey data was puuled from the pdf of National Contraceptive Prevalence Survey 1987 to analyze effect on the number of children that Indonesian women have based on different background characteristic. The background characteristic and understanding of at least one modern family planning mathod does not affect their number of children. This paper purposes to reject the bias of women who understand modern family planning methods will lead to less children birth. The future analyse is required to increase the number of survey in various years and locations."
+output:
+  bookdown::pdf_document2
+toc: FALSE
+bibliography: references.bib
+appendix: datasheet_template.Rmd
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(tidyverse)
+library(matrixStats)
+library(knitr)
+library(kableExtra)
+```
+
+# Introduction
+
+The use of Family planning methods promotes the human right to decide the number and spacing of children. But do women who know about Family planning methods have fewer children than women who don't? In this paper, I studied the National Indonesia Contraceptive Survey in 1987 to prove if women who knew Family planning methods had no effect on the number of children.
+
+
+
+# Data
+
+The survey [@citepaper] is collected by Central Bureau of Statistics Jakarta, Indonesia and National Family Planning Coordinating Board Jakarta, Indonesia and Institute for Resource Development/Westinghouse Columbia, Maryland USA. I extract one of the table from the PDF provided by the DHS Program using function from R [@citeR] the packages of pdftools [@citePDF], tidyverse [@thereferencecanbewhatever], tidyr [@citetidyr], readr [@citereadr], knitr [@citeknitr] and strex [@citestrex]. And I calculated the standard deviation of each row except the percentage of total by using the function from package matrixStats [@citematrix]. This table illustrates the percentage of currently married women knowing at least one modern family planning method in terms of their background. (Table \@ref(fig:table)).
+
+```{r table, fig.cap="Percent of currently married women knowing at least one modern family planning method, by number of Living children and background characteristics,NICPS, 1987", echo=FALSE, warning=FALSE, message=FALSE}
+cleaned_data <- read_csv(here::here("inputs/data/raw_data.csv"))
+cleaned_data <-
+  cleaned_data |>
+  mutate(standard_deviation_children = signif(rowSds(as.matrix(cleaned_data[,c(3:8)])), digits = 3)) |>
+  mutate(standard_deviation_include_no_children = signif(rowSds(as.matrix(cleaned_data[,c(2:8)])), digits = 3))
+
+  kable(cleaned_data,
+    caption = "Percent of currently married women knowing at least one modern family planning method, by number of Living children and background characteristics,NICPS, 1987",
+    col.names = c("Background characteristic", "no", "1", "2", "3", "4", "5", "6+", "Total", "sd 1+ children", "sd"),
+    linesep = "",
+    booktabs = TRUE) %>%
+  kableExtra::kable_styling(font_size = 8) %>%
+  add_header_above(c("number of" = 5, "children" = 5, " " = 1))
+```
+
+# Results and Discussion
+
+According to the table, only when women have background characteristic of living in East Java, Bali, or receiving none education, Women without children and know at least one modern family planning method are less than those with children, due to the difference of standard deviation. However, in other cases, there is no significant change of understanding of at least one modern family planning method in women have different number of children including no children, because the standard deviation is relatively low. Therefore, in the majority background characteristic that women have, knowing at least one modern family planning method have no effect on how many children they plan to reproduce.
+
+# Conclusion
+
+In conclusion, in 1987, women with the most of the background characteristic knowing at least one modern family planning method in Indonesia. The number of children they have does not affected by the previous fact. The The weakness of this paper is that I only studied only one survey in a specific location and specific year. There are more surveys in various location and period to be analyzed in the future to strengthen the support of my hypothesis.
+
+\newpage
+
+\appendix
+
+# Appendix 
+```{r code=readLines(knitr::purl('C:/Users/Yukiu/Documents/Indonesia-Demographic-and-Health-Survey-1987/inputs/data/datasheet_template.Rmd', documentation = 0)), eval = FALSE}
+
+```
+
+
+
+\newpage
+
+
+# References
+
+
